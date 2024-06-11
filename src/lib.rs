@@ -24,19 +24,16 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filepath)?;
 
     for line in search(&config.query, &contents) {
-        println!("Line: {}", line);
-        println!("LINE AFTER: {:?}", line.split_whitespace().next());
         for word in line.split_whitespace(){
-            print!(" {}", word);
-            if word == config.query{
-                println!("{}", word.red());
+            if word.contains(&config.query){
+                print!("{} ", word.red());
                 continue;
             }
+            print!("{} ", word);
         }
-        println!("{line}")
+        println!("");
     }
 
-    // println!("With text:\n{contents}");
 
     Ok(())
 }
