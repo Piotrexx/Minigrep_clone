@@ -15,7 +15,7 @@ fn main() {
 
     println!("Query: {}", config.query);
     println!("File Path: {}", config.filepath);
-
+    println!("-----------------------------------------------------------------");
     if let Err(e) = cli_app::run(config) {
         println!("Application error: {e}");
         process::exit(1);
