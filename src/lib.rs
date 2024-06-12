@@ -23,16 +23,20 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filepath)?;
 
-    for line in search(&config.query, &contents) {
-        for word in line.split_whitespace(){
-            if word.contains(&config.query){
-                print!("{} ", word.red());
-                continue;
+    let results = search(&config.query, &contents);
+
+    if !results.is_empty(){
+        for line in results {
+            for word in line.split_whitespace(){
+                if word.contains(&config.query){
+                    print!("{} ", word.red());
+                    continue;
+                }
+                print!("{} ", word);
             }
-            print!("{} ", word);
-        }
-        println!("");
-    }
+            println!("");
+        }    
+    }else{println!("Nothing Found :(")}
     
     Ok(())
 }
