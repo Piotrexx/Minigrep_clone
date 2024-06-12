@@ -6,7 +6,8 @@ pub struct Config {
     pub filepath: String
 }
 
-
+#[derive(PartialEq)]
+#[derive(Debug)]
 pub struct Line {
     pub content: String,
     pub line: usize
@@ -58,7 +59,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<Line> {
         if line.contains(query){
             let found_line = Line {
                 content: line.to_string(), 
-                line: index
+                line: index + 1
             };
             result.push(found_line)
         }
@@ -72,12 +73,11 @@ mod tests {
 
     #[test]
     fn one_result() {
-        let query = "duct";
-        let contents = "\
-Rust:
+        let query = "safe";
+        let contents = "Rust:
 safe, fast, productive.
 Pick three.";
 
-        // assert_eq!(Line{content: String::from("safe, fast, productive."), line: 5} ,search(query, contents));
+        assert_eq!(vec![Line{content: String::from("safe, fast, productive."), line: 2}], search(query, contents))
     }
 }
